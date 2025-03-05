@@ -447,7 +447,7 @@ export const voteForImage = async (imageId: string, userId: string): Promise<boo
       // User already voted, remove their vote
       await updateDoc(doc(db, 'images', imageId), {
         votes: (imageData.votes || 0) - 1,
-        voterIds: voterIds.filter(id => id !== userId)
+        voterIds: voterIds.filter((id: string) => id !== userId)
       });
       console.log(`Vote removed from image ${imageId} by user ${userId}`);
     } else {
@@ -502,7 +502,7 @@ export const getTopVotedImages = async (limit: number = 10): Promise<ImageData[]
         ...doc.data(),
         votes: doc.data().votes || 0
       } as ImageData))
-      .filter(image => image.votes > 0)
+      .filter(image => (image.votes || 0) > 0)
       .sort((a, b) => (b.votes || 0) - (a.votes || 0))
       .slice(0, limit);
     

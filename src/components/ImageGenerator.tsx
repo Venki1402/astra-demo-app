@@ -90,7 +90,7 @@ export default function ImageGenerator({ sourceImage, onClearSourceImage }: Imag
               <div className="flex items-center gap-2">
                 <Badge>Reprompting v{sourceImage.version || 1}</Badge>
                 <Button 
-                  variant="ghost" 
+                  variant="noShadow" 
                   size="sm" 
                   onClick={handleClearSourceImage}
                   className="h-6 w-6 p-0"

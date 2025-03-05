@@ -241,7 +241,7 @@ export default function ImageGallery({
                 <div className="flex gap-2">
                   {showVoting && image.id && (
                     <Button
-                      variant="outline"
+                      variant="noShadow"
                       size="sm"
                       className="flex items-center gap-1"
                       onClick={(e) => handleVote(image.id!, e)}
@@ -254,7 +254,7 @@ export default function ImageGallery({
                   
                   {showDownload && (
                     <Button
-                      variant="outline"
+                      variant="noShadow"
                       size="sm"
                       className="flex items-center gap-1"
                       onClick={(e) => handleDownload(image.imageUrl, image.prompt, e)}
@@ -280,9 +280,9 @@ export default function ImageGallery({
                   
                   {showDelete && image.id && (
                     <Button
-                      variant="destructive"
+                      variant="default"
                       size="sm"
-                      className="flex items-center gap-1"
+                      className="flex items-center gap-1 bg-red-500 hover:bg-red-600"
                       onClick={(e) => handleDelete(image.id!, e)}
                       disabled={isDeleting[image.id!]}
                     >
@@ -317,7 +317,8 @@ export default function ImageGallery({
               <div className="flex items-center gap-2">
                 {showVoting && selectedImage.id && (
                   <Button
-                    variant="outline"
+                    variant="noShadow"
+                    size="sm"
                     className="flex items-center gap-1"
                     onClick={(e) => handleVote(selectedImage.id!, e)}
                     disabled={isVoting[selectedImage.id!]}
@@ -329,18 +330,19 @@ export default function ImageGallery({
                 
                 {showDownload && (
                   <Button
-                    variant="outline"
+                    variant="noShadow"
+                    size="sm"
                     className="flex items-center gap-1"
                     onClick={(e) => handleDownload(selectedImage.imageUrl, selectedImage.prompt, e)}
                   >
                     <Download className="h-4 w-4" />
-                    <span>Download</span>
                   </Button>
                 )}
                 
                 {showVersions && selectedImage.id && (
                   <Button
                     variant="neutral"
+                    size="sm"
                     className="flex items-center gap-1"
                     onClick={(e) => {
                       e.stopPropagation();

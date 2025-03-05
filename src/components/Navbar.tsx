@@ -11,11 +11,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
-import { LogOut, LayoutDashboard, Shield } from 'lucide-react';
+import { LogOut, LayoutDashboard, Shield, Menu, X } from 'lucide-react';
 
 export default function Navbar() {
   const { user, userRole, loading, error, signIn, logOut, clearError } = useAuth();
   const [showError, setShowError] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Show error alert when error changes
   useEffect(() => {
@@ -35,9 +36,13 @@ export default function Navbar() {
     clearError();
   };
 
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
+
   return (
     <>
-      <nav className="bg-white border-b-4 border-black p-4">
+      <nav className="bg-white border-b-4 border-black p-4 relative z-20">
         <div className="container mx-auto flex justify-between items-center">
           <Link href="/" className="flex items-center gap-2 text-2xl font-bold">
             <Image 
@@ -47,29 +52,17 @@ export default function Navbar() {
               height={32} 
               className="h-8 w-auto" 
             />
-            Astra Labs
+            <span className="whitespace-nowrap">Astra Labs</span>
           </Link>
 
-          <div className="flex items-center gap-6">
-            {/* Main Navigation */}
-            <div className="hidden md:flex items-center gap-6">
-              <Link href="/gallery" className="text-lg font-bold hover:underline">
-                Gallery
-              </Link>
-              <Link href="/leaderboard" className="text-lg font-bold hover:underline">
-                Leaderboard
-              </Link>
-            </div>
-
-            {/* Mobile Navigation Links */}
-            <div className="md:hidden flex gap-4">
-              <Link href="/gallery" className="text-base font-bold">
-                Gallery
-              </Link>
-              <Link href="/leaderboard" className="text-base font-bold">
-                Leaderboard
-              </Link>
-            </div>
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center gap-6">
+            <Link href="/gallery" className="text-lg font-bold hover:underline">
+              Gallery
+            </Link>
+            <Link href="/leaderboard" className="text-lg font-bold hover:underline">
+              Leaderboard
+            </Link>
 
             {!loading && (
               <>
@@ -78,7 +71,7 @@ export default function Navbar() {
                     {/* User Dropdown */}
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-md">
+                        <Button variant="noShadow" className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-md">
                           {user.photoURL ? (
                             <img 
                               src={user.photoURL} 
@@ -90,7 +83,7 @@ export default function Navbar() {
                               <span className="font-bold">{user.displayName?.charAt(0) || 'U'}</span>
                             </div>
                           )}
-                          <span className="font-bold text-lg hidden md:inline">{user.displayName}</span>
+                          <span className="font-bold text-lg">{user.displayName}</span>
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end" className="w-56 border-2 border-black bg-white mt-1 p-0 rounded-none">
@@ -123,8 +116,106 @@ export default function Navbar() {
               </>
             )}
           </div>
+
+          {/* Mobile Menu Button */}
+          <div className="flex md:hidden items-center gap-2">
+            {!loading && user && (
+              <div className="mr-2">
+                {user.photoURL ? (
+                  <img 
+                    src={user.photoURL} 
+                    alt={user.displayName || 'User'} 
+                    className="w-8 h-8 rounded-full border-2 border-black"
+                  />
+                ) : (
+                  <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center border-2 border-black">
+                    <span className="font-bold">{user.displayName?.charAt(0) || 'U'}</span>
+                  </div>
+                )}
+              </div>
+            )}
+            <Button 
+              variant="noShadow" 
+              size="sm" 
+              onClick={toggleMobileMenu} 
+              className="p-1"
+            >
+              {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </Button>
+          </div>
         </div>
       </nav>
+
+      {/* Mobile Menu */}
+      {mobileMenuOpen && (
+        <div className="md:hidden fixed inset-0 z-10 bg-white pt-20 px-4">
+          <div className="flex flex-col gap-6 items-center text-center">
+            <Link 
+              href="/gallery" 
+              className="text-xl font-bold py-3 border-b border-gray-200 w-full"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Gallery
+            </Link>
+            <Link 
+              href="/leaderboard" 
+              className="text-xl font-bold py-3 border-b border-gray-200 w-full"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Leaderboard
+            </Link>
+            
+            {!loading && (
+              <>
+                {user ? (
+                  <>
+                    <Link 
+                      href="/dashboard" 
+                      className="text-xl font-bold py-3 border-b border-gray-200 w-full flex items-center justify-center gap-2"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      <LayoutDashboard className="h-5 w-5" />
+                      Dashboard
+                    </Link>
+                    
+                    {userRole === 'admin' && (
+                      <Link 
+                        href="/admin" 
+                        className="text-xl font-bold py-3 border-b border-gray-200 w-full flex items-center justify-center gap-2"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        <Shield className="h-5 w-5" />
+                        Admin Dashboard
+                      </Link>
+                    )}
+                    
+                    <Button 
+                      onClick={() => {
+                        logOut();
+                        setMobileMenuOpen(false);
+                      }} 
+                      className="mt-4 border-2 border-black bg-red-500 text-white hover:bg-red-600 w-full"
+                    >
+                      <LogOut className="h-5 w-5 mr-2" />
+                      Sign Out
+                    </Button>
+                  </>
+                ) : (
+                  <Button 
+                    onClick={() => {
+                      signIn();
+                      setMobileMenuOpen(false);
+                    }} 
+                    className="mt-4 border-2 border-black w-full"
+                  >
+                    Sign In with Google
+                  </Button>
+                )}
+              </>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* Error Alert */}
       {showError && error && (
