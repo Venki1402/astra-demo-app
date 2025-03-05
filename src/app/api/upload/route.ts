@@ -1,15 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { uploadImage } from '@/lib/cloudinary';
-import { getServerSession } from 'next-auth/next';
-import { authOptions } from '@/lib/auth';
+// Remove NextAuth imports as we're using Firebase
+// import { getServerSession } from 'next-auth/next';
+// import { authOptions } from '@/lib/auth';
 
 export async function POST(request: NextRequest) {
   try {
-    // Check authentication if needed
-    // const session = await getServerSession(authOptions);
-    // if (!session) {
-    //   return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    // }
+    // Firebase authentication is handled client-side
+    // No need for server-side session check here
 
     // Get the request body
     const body = await request.json();

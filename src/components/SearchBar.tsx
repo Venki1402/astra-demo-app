@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Search, Upload, X, Loader2 } from 'lucide-react';
@@ -8,15 +8,28 @@ interface SearchBarProps {
   onSearch: (term: string) => void;
   onImageSearch?: (file: File) => void;
   placeholder?: string;
+  initialValue?: string;
 }
 
-export default function SearchBar({ onSearch, onImageSearch, placeholder = 'Search by prompt...' }: SearchBarProps) {
-  const [searchTerm, setSearchTerm] = useState('');
+export default function SearchBar({ 
+  onSearch, 
+  onImageSearch, 
+  placeholder = 'Search by prompt...',
+  initialValue = ''
+}: SearchBarProps) {
+  const [searchTerm, setSearchTerm] = useState(initialValue);
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [isSearching, setIsSearching] = useState(false);
   const [searchFeedback, setSearchFeedback] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Update searchTerm when initialValue changes
+  useEffect(() => {
+    if (initialValue !== undefined) {
+      setSearchTerm(initialValue);
+    }
+  }, [initialValue]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
