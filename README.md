@@ -1,36 +1,136 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Astra Image Generator
+
+A full-stack web application that allows designers to generate images using DALL·E AI and administrators to monitor, search, and manage their work.
+
+## Features
+
+### Designer Interface
+
+- Sign in with Google authentication
+- Generate images using text prompts with DALL·E
+- Save generated images to personal gallery
+- Search through personal generated images
+
+### Admin Dashboard
+
+- Monitor multiple designers and their generated images
+- Search across all designers' work
+- Filter images by designer
+- View detailed image information
+
+## Tech Stack
+
+- **Frontend**: Next.js 15, React 19, Tailwind CSS 4
+- **UI Components**: Shadcn UI with Neobrutalism design
+- **Authentication**: Firebase Authentication (Google)
+- **Database**: Firebase Firestore
+- **Storage**: Cloudinary
+- **Image Generation**: OpenAI DALL·E 3
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 18+ and pnpm
+- Firebase account
+- Cloudinary account
+- OpenAI API key
+
+### Installation
+
+1. Clone the repository
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/yourusername/astra-demo-app.git
+cd astra-demo-app
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+pnpm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+3. Set up environment variables
 
-## Learn More
+Create a `.env.local` file in the root directory with the following variables:
 
-To learn more about Next.js, take a look at the following resources:
+```
+# OpenAI API Configuration
+NEXT_PUBLIC_OPENAI_API_KEY=your_openai_api_key
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Cloudinary Configuration
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
+CLOUDINARY_API_KEY=your_cloudinary_api_key
+CLOUDINARY_API_SECRET=your_cloudinary_api_secret
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# Firebase Configuration
+NEXT_PUBLIC_FIREBASE_API_KEY=your_firebase_api_key
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_firebase_auth_domain
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_firebase_project_id
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_firebase_storage_bucket
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_firebase_messaging_sender_id
+NEXT_PUBLIC_FIREBASE_APP_ID=your_firebase_app_id
+```
 
-## Deploy on Vercel
+4. Run the development server
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+pnpm dev
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+5. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+## Project Structure
+
+```
+src/
+├── app/                  # Next.js app router
+│   ├── admin/            # Admin dashboard
+│   ├── dashboard/        # Designer dashboard
+│   ├── globals.css       # Global styles
+│   ├── layout.tsx        # Root layout
+│   └── page.tsx          # Home page
+├── components/           # React components
+│   ├── ui/               # Shadcn UI components
+│   ├── ImageGallery.tsx  # Image gallery component
+│   ├── ImageGenerator.tsx # Image generator component
+│   ├── Navbar.tsx        # Navigation component
+│   └── SearchBar.tsx     # Search component
+└── lib/                  # Utility functions
+    ├── auth-context.tsx  # Authentication context
+    ├── cloudinary.ts     # Cloudinary configuration
+    ├── firebase.ts       # Firebase configuration
+    ├── firebase-service.ts # Firebase service functions
+    ├── openai.ts         # OpenAI configuration
+    └── utils.ts          # Utility functions
+```
+
+## Authentication and Authorization
+
+- Users sign in with Google authentication
+- New users are assigned the 'designer' role by default
+- Admin role must be manually assigned in the Firebase database
+
+## Image Storage
+
+- Images are stored in Cloudinary
+- Each user's images are stored in a separate folder
+- Images are optimized automatically by Cloudinary
+
+## Environment Variables
+
+This project uses environment variables to manage sensitive information like API keys. Make sure to set up your `.env.local` file as described in the installation section.
+
+- **Client-side variables** must be prefixed with `NEXT_PUBLIC_`
+- **Server-side variables** are only accessible in server components and API routes
+- Never commit your `.env.local` file to version control
+
+For more information, see:
+
+- [Cloudinary Setup Guide](./cloudinary-setup.md)
+- [Firebase Setup Guide](./firebase-setup.md)
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
