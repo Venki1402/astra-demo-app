@@ -89,7 +89,6 @@ export default function GalleryPage() {
           <SearchBar 
             onSearch={handleSearch} 
             placeholder="Search images by prompt..." 
-            initialValue={searchTerm}
           />
         </div>
         

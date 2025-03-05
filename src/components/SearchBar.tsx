@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Search, Upload, X, Loader2 } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
-interface SearchBarProps {
+export interface SearchBarProps {
   onSearch: (term: string) => void;
   onImageSearch?: (file: File) => void;
   placeholder?: string;
