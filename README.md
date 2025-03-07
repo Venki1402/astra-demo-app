@@ -126,11 +126,6 @@ This project uses environment variables to manage sensitive information like API
 - **Server-side variables** are only accessible in server components and API routes
 - Never commit your `.env.local` file to version control
 
-For more information, see:
-
-- [Cloudinary Setup Guide](./cloudinary-setup.md)
-- [Firebase Setup Guide](./firebase-setup.md)
-
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
