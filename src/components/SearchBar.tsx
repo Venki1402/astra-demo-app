@@ -1,8 +1,8 @@
-import { useState, useRef, useEffect } from 'react';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Search, Upload, X, Loader2 } from 'lucide-react';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { useState, useRef, useEffect } from "react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Search, Upload, X, Loader2 } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export interface SearchBarProps {
   onSearch: (term: string) => void;
@@ -11,11 +11,11 @@ export interface SearchBarProps {
   initialValue?: string;
 }
 
-export default function SearchBar({ 
-  onSearch, 
-  onImageSearch, 
-  placeholder = 'Search by prompt...',
-  initialValue = ''
+export default function SearchBar({
+  onSearch,
+  onImageSearch,
+  placeholder = "Search by prompt...",
+  initialValue = "",
 }: SearchBarProps) {
   const [searchTerm, setSearchTerm] = useState(initialValue);
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
@@ -41,7 +41,7 @@ export default function SearchBar({
     if (file) {
       setSelectedImage(file);
       setSearchFeedback(null);
-      
+
       // Create preview URL
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -55,16 +55,16 @@ export default function SearchBar({
     if (selectedImage && onImageSearch) {
       try {
         setIsSearching(true);
-        setSearchFeedback('Analyzing image...');
-        
+        setSearchFeedback("Analyzing image...");
+
         // Call the image search function
         await onImageSearch(selectedImage);
-        
+
         // Reset feedback after successful search
         setSearchFeedback(null);
       } catch (error) {
-        console.error('Error during image search:', error);
-        setSearchFeedback('Error analyzing image. Please try again.');
+        console.error("Error during image search:", error);
+        setSearchFeedback("Error analyzing image. Please try again.");
       } finally {
         setIsSearching(false);
       }
@@ -76,7 +76,7 @@ export default function SearchBar({
     setImagePreview(null);
     setSearchFeedback(null);
     if (fileInputRef.current) {
-      fileInputRef.current.value = '';
+      fileInputRef.current.value = "";
     }
   };
 
@@ -84,10 +84,14 @@ export default function SearchBar({
     <div className="w-full">
       <Tabs defaultValue="text" className="w-full">
         <TabsList className="mb-4 w-full">
-          <TabsTrigger value="text" className="flex-1">Search by Text</TabsTrigger>
-          <TabsTrigger value="image" className="flex-1">Search by Image</TabsTrigger>
+          <TabsTrigger value="text" className="flex-1">
+            Search by Text
+          </TabsTrigger>
+          <TabsTrigger value="image" className="flex-1">
+            Search by Image
+          </TabsTrigger>
         </TabsList>
-        
+
         <TabsContent value="text">
           <form onSubmit={handleSubmit} className="flex w-full gap-2">
             <Input
@@ -103,7 +107,7 @@ export default function SearchBar({
             </Button>
           </form>
         </TabsContent>
-        
+
         <TabsContent value="image">
           <div className="space-y-4">
             <div className="flex gap-2">
@@ -115,8 +119,8 @@ export default function SearchBar({
                 className="border-2 border-black flex-1"
                 disabled={isSearching}
               />
-              <Button 
-                onClick={handleImageSearch} 
+              <Button
+                onClick={handleImageSearch}
                 disabled={!selectedImage || !onImageSearch || isSearching}
                 className="flex items-center gap-2"
               >
@@ -125,18 +129,18 @@ export default function SearchBar({
                 ) : (
                   <Upload className="h-4 w-4" />
                 )}
-                {isSearching ? 'Analyzing...' : 'Search'}
+                {isSearching ? "Analyzing..." : "Search"}
               </Button>
             </div>
-            
+
             {imagePreview && (
               <div className="relative inline-block">
-                <img 
-                  src={imagePreview} 
-                  alt="Selected image" 
-                  className="max-h-40 border-2 border-black rounded-md" 
+                <img
+                  src={imagePreview}
+                  alt="Selected image"
+                  className="max-h-40 border-2 border-black rounded-md"
                 />
-                <button 
+                <button
                   onClick={clearSelectedImage}
                   className="absolute top-1 right-1 bg-black text-white rounded-full p-1"
                   type="button"
@@ -146,19 +150,18 @@ export default function SearchBar({
                 </button>
               </div>
             )}
-            
+
             {searchFeedback && (
-              <p className="text-sm text-blue-600">
-                {searchFeedback}
-              </p>
+              <p className="text-sm text-blue-600">{searchFeedback}</p>
             )}
-            
+
             <p className="text-sm text-gray-500">
-              Upload an image to find similar images based on AI-detected content
+              Upload an image to find similar images based on AI-detected
+              content
             </p>
           </div>
         </TabsContent>
       </Tabs>
     </div>
   );
-} 
+}

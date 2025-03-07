@@ -17,8 +17,8 @@ export const metadata: Metadata = {
   title: "Astra Labs",
   description: "Generate images using DALL·E and manage them",
   icons: {
-    icon: '/icon.svg',
-    apple: '/icon.svg',
+    icon: "/icon.svg",
+    apple: "/icon.svg",
   },
 };
 

@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { initializeApp, getApps, getApp } from 'firebase/app';
-import { getAuth, GoogleAuthProvider } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
+import { initializeApp, getApps, getApp } from "firebase/app";
+import { getAuth, GoogleAuthProvider } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -13,7 +13,7 @@ const firebaseConfig = {
   storageBucket: "astra-demo-app.firebasestorage.app", // Using the exact value from Firebase console
   messagingSenderId: "845834493684",
   appId: "1:845834493684:web:fa236993dbfaf10bf5c8a1",
-  measurementId: "G-W04L6F1DQ1"
+  measurementId: "G-W04L6F1DQ1",
 };
 
 // Initialize Firebase
@@ -23,12 +23,12 @@ const db = getFirestore(app);
 const googleProvider = new GoogleAuthProvider();
 
 // Add scopes to the Google provider
-googleProvider.addScope('profile');
-googleProvider.addScope('email');
+googleProvider.addScope("profile");
+googleProvider.addScope("email");
 
 // Set custom parameters
 googleProvider.setCustomParameters({
-  prompt: 'select_account'
+  prompt: "select_account",
 });
 
-export { app, auth, db, googleProvider }; 
+export { app, auth, db, googleProvider };
