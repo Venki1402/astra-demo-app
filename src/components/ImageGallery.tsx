@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { useAuth } from '@/lib/auth-context';
 import { ImageData, voteForImage, hasUserVotedForImage, deleteImage } from '@/lib/firebase-service';
 import { Heart, Download, History, Trash2 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
@@ -31,6 +32,7 @@ export default function ImageGallery({
   onViewVersions,
   onImageDeleted
 }: ImageGalleryProps) {
+  const { loading, signIn } = useAuth();
   const [selectedImage, setSelectedImage] = useState<ImageData | null>(null);
   const [votedImages, setVotedImages] = useState<Record<string, boolean>>({});
   const [isVoting, setIsVoting] = useState<Record<string, boolean>>({});
@@ -65,8 +67,9 @@ export default function ImageGallery({
 
   const handleVote = async (imageId: string, event: React.MouseEvent) => {
     event.stopPropagation();
-    
-    if (!currentUserId || !imageId) return;
+
+    if(!imageId) return;
+    if (!currentUserId) await signIn();
     
     // Prevent double-clicking
     if (isVoting[imageId]) return;
@@ -205,6 +208,14 @@ export default function ImageGallery({
       <div className="w-full">
         <h2 className="text-2xl font-bold mb-4">{title}</h2>
         <p className="text-gray-500">No images found.</p>
+      </div>
+    );
+  }
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-black"></div>
       </div>
     );
   }
