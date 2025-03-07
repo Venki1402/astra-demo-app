@@ -1,5 +1,7 @@
 # Astra Image Generator
 
+![image](https://github.com/user-attachments/assets/593ea7bb-7529-406b-9446-74629da9ba1b)
+
 A full-stack web application that allows designers to generate images using DALL·E AI and administrators to monitor, search, and manage their work.
 
 ## Features
@@ -125,11 +127,6 @@ This project uses environment variables to manage sensitive information like API
 - **Client-side variables** must be prefixed with `NEXT_PUBLIC_`
 - **Server-side variables** are only accessible in server components and API routes
 - Never commit your `.env.local` file to version control
-
-For more information, see:
-
-- [Cloudinary Setup Guide](./cloudinary-setup.md)
-- [Firebase Setup Guide](./firebase-setup.md)
 
 ## License
 
