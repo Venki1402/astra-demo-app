@@ -1,5 +1,7 @@
 # Astra Image Generator
 
+![image](https://github.com/user-attachments/assets/593ea7bb-7529-406b-9446-74629da9ba1b)
+
 A full-stack web application that allows designers to generate images using DALL·E AI and administrators to monitor, search, and manage their work.
 
 ## Features
