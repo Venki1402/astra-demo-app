@@ -82,7 +82,8 @@ export default function ImageGallery({
   const handleVote = async (imageId: string, event: React.MouseEvent) => {
     event.stopPropagation();
 
-    if (!currentUserId || !imageId) return;
+    if (!imageId) return;
+    if(!currentUserId) await signIn();
 
     // Prevent double-clicking
     if (isVoting[imageId]) return;
